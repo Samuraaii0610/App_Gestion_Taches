@@ -58,10 +58,21 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <h1>Gestionnaire de Tâches</h1>
-      <FilterForm onFilter={handleFilter} />
-      <TaskForm onAddTask={addTask} />
-      <TaskList tasks={tasks} onDeleteTask={deleteTask} onEditTask={editTask} />
+      <div className="filter-section">
+        <h1>Gestionnaire de Tâches</h1>
+        <FilterForm onFilter={handleFilter} />
+      </div>
+
+      <div className="main-content">
+        <TaskForm onAddTask={addTask} />
+      </div>
+
+      <div className="task-section">
+        <h2>Liste des tâches</h2>
+        <div className="task-list">
+          <TaskList tasks={tasks} onDeleteTask={deleteTask} onEditTask={editTask} />
+        </div>
+      </div>
     </div>
   );
 };

@@ -155,6 +155,7 @@ const TaskForm = ({ onAddTask }) => {
           </div>
         ))}
         <button
+          data-action="add-subtask"
           type="button"
           onClick={() => setTask({ ...task, sousTaches: [...task.sousTaches, { titre: '', statut: 'à faire', echeance: '' }] })}
         >
@@ -179,13 +180,14 @@ const TaskForm = ({ onAddTask }) => {
           </div>
         ))}
         <button
+          data-action="add-comment"
           type="button"
           onClick={() => setTask({ ...task, commentaires: [...task.commentaires, { auteur: '', contenu: '' }] })}
         >
           Ajouter un commentaire
         </button>
       </div>
-      <button type="submit">Ajouter la tâche</button>
+      <button data-action="add-task" type="submit">Ajouter la tâche</button>
     </form>
   );
 };
