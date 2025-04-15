@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const TaskItem = ({ task, onDeleteTask, onEditTask }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleDetails = () => {
     setShowDetails(true);
@@ -27,12 +29,32 @@ const TaskItem = ({ task, onDeleteTask, onEditTask }) => {
   };
 
   const handleDelete = () => {
-    onDeleteTask(task._id);
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: "Vous ne pourrez pas annuler cette action!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer!',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onDeleteTask(task._id);
+      }
+    });
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
   };
 
   return (
     <li>
       <h3>{task.titre}</h3>
+      <button onClick={toggleFavorite}>
+        {isFavorite ? '★' : '☆'}
+      </button>
       <div className="task-actions">
         <button data-action="details" onClick={handleDetails}>Détails</button>
         <button data-action="edit" onClick={handleEdit}>Modifier</button>

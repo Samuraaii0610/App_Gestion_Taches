@@ -4,6 +4,7 @@ import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import FilterForm from './components/FilterForm';
 import './styles.css';
+import Swal from 'sweetalert2';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -27,10 +28,19 @@ const App = () => {
   const addTask = async (newTask) => {
     try {
       const response = await axios.post('http://localhost:5000/api/tasks', newTask);
-      console.log('Réponse de l\'API:', response.data);
       setTasks([...tasks, response.data]);
+      Swal.fire({
+        icon: 'success',
+        title: 'Tâche ajoutée',
+        text: 'La tâche a été ajoutée avec succès!',
+        timer: 2000
+      });
     } catch (error) {
-      console.error('Erreur lors de l\'ajout de la tâche:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: "Une erreur s'est produite lors de l'ajout de la tâche"
+      });
     }
   };
 
@@ -38,8 +48,18 @@ const App = () => {
     try {
       await axios.delete(`http://localhost:5000/api/tasks/${id}`);
       setTasks(tasks.filter(task => task._id !== id));
+      Swal.fire({
+        icon: 'success',
+        title: 'Tâche supprimée',
+        text: 'La tâche a été supprimée avec succès!',
+        timer: 2000
+      });
     } catch (error) {
-      console.error('Erreur lors de la suppression de la tâche:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: "Une erreur s'est produite lors de la suppression de la tâche"
+      });
     }
   };
 
@@ -47,8 +67,18 @@ const App = () => {
     try {
       const response = await axios.put(`http://localhost:5000/api/tasks/${updatedTask._id}`, updatedTask);
       setTasks(tasks.map(task => task._id === updatedTask._id ? response.data : task));
+      Swal.fire({
+        icon: 'success',
+        title: 'Tâche modifiée',
+        text: 'La tâche a été modifiée avec succès!',
+        timer: 2000
+      });
     } catch (error) {
-      console.error('Erreur lors de la modification de la tâche:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: "Une erreur s'est produite lors de la modification de la tâche"
+      });
     }
   };
 
